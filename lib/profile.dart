@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
+import 'custom_navigation_bar.dart'; // Sesuaikan dengan lokasi file CustomNavigationBar.dart Anda
 
-void main() {
-  runApp(const FigmaToCodeApp());
-}
-
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
-
+class ProfilePageWithNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
-      ),
-      home: Scaffold(
-        body: ListView(children: [
+    return Scaffold(
+      body: Stack(
+        children: [
           ProfilePage(),
-        ]),
+          Positioned(
+            left: 0,
+            bottom: 0,
+            right: 0,
+            child: CustomNavigationBar(),
+          ),
+        ],
       ),
     );
   }
@@ -25,401 +23,148 @@ class FigmaToCodeApp extends StatelessWidget {
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 390,
-          height: 857,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 390,
-                  padding: const EdgeInsets.only(
-                    top: 42,
-                    left: 12,
-                    right: 20,
-                    bottom: 16,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF9AD4A6),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: 390,
+              height: 839,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Container(
+                      width: 390,
+                      padding: const EdgeInsets.only(
+                        top: 42,
+                        left: 12,
+                        right: 20,
+                        bottom: 16,
                       ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 28,
-                        height: 28,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "assets/images/left_icon.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ],
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF9AD4A6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 59),
-                      Container(
-                        width: 291,
-                        height: 29,
-                        padding: const EdgeInsets.only(right: 104),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 28,
+                            height: 28,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/left_icon.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(right: 104),
+                            child: Text(
                               'Profile',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 25,
                                 fontFamily: 'Raleway',
                                 fontWeight: FontWeight.w700,
-                                height: 0,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                              width: 28), // Placeholder to balance the space
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 20,
-                top: 774,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 55, vertical: 2),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF9DDE8B),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100),
                     ),
-                    shadows: [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      )
-                    ],
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "assets/images/home_icon.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ],
+                  Positioned(
+                    left: 14,
+                    top: 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage(
+                              'assets/images/profile_icon.png'), // Sesuaikan dengan lokasi gambar Anda
                         ),
-                      ),
-                      const SizedBox(width: 45),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "assets/images/notif_icon.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 45),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: ShapeDecoration(
-                          color: Color(0xFF40A578),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                        SizedBox(height: 20),
+                        Text(
+                          'Nama Pengguna',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "assets/images/person_icon.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ),
-                ),
-              ),
-              Positioned(
-                left: 12,
-                top: 106,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Nama',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 7),
-                            Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 365,
-                                    height: 33,
-                                    decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                  Positioned(
+                    left: 14,
+                    top: 240,
+                    right: 14,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30),
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.person),
+                          title: Text('Nama Lengkap'),
+                          subtitle: Text('Nama Lengkap Pengguna'),
                         ),
-                      ),
-                      const SizedBox(height: 19),
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Email',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 7),
-                            Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 365,
-                                    height: 33,
-                                    decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        ListTile(
+                          leading: Icon(Icons.phone),
+                          title: Text('Nomor Telepon'),
+                          subtitle: Text('+62 123 4567 890'),
                         ),
-                      ),
-                      const SizedBox(height: 19),
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'No Handphone',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 7),
-                            Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 365,
-                                    height: 33,
-                                    decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        ListTile(
+                          leading: Icon(Icons.location_on),
+                          title: Text('Alamat'),
+                          subtitle: Text('Alamat Pengguna'),
                         ),
-                      ),
-                      const SizedBox(height: 19),
-                      Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Asal',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 7),
-                            Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 365,
-                                    height: 33,
-                                    decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                        SizedBox(height: 30),
+                        Text(
+                          'Pengaturan Akun',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.lock),
+                          title: Text('Ubah Kata Sandi'),
+                          onTap: () {
+                            // Tambahkan fungsi untuk mengubah kata sandi
+                          },
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.logout),
+                          title: Text('Keluar'),
+                          onTap: () {
+                            // Tambahkan fungsi untuk keluar dari akun
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

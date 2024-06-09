@@ -59,26 +59,31 @@ class BookingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Container(
-                        width: 28,
-                        height: 28,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      "assets/images/left_icon.png"),
-                                  fit: BoxFit.fill,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
+                        child: Container(
+                          width: 28,
+                          height: 28,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/left_icon.png"),
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(width: 59),
@@ -219,7 +224,7 @@ class BookingPage extends StatelessWidget {
                         left: 43,
                         top: 150,
                         child: Text(
-                          'Poli',
+                          'Jenis Pasien',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 10,
@@ -233,13 +238,18 @@ class BookingPage extends StatelessWidget {
                       Positioned(
                         left: 138,
                         top: 341,
-                        child: Container(
-                          width: 79,
-                          height: 29,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF40A578),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/invoice');
+                          },
+                          child: Container(
+                            width: 79,
+                            height: 29,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF40A578),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                           ),
                         ),
@@ -370,8 +380,7 @@ class BookingPage extends StatelessWidget {
                           height: 18,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image:
-                                  NetworkImage("assets/images/down_icon.png"),
+                              image: AssetImage("assets/images/down_icon.png"),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -397,7 +406,7 @@ class BookingPage extends StatelessWidget {
                           height: 116,
                           decoration: ShapeDecoration(
                             image: DecorationImage(
-                              image: NetworkImage(
+                              image: AssetImage(
                                   "assets/images/ngumpul_dokter.jpg"),
                               fit: BoxFit.cover,
                             ),

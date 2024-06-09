@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
+import 'main.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -26,142 +28,213 @@ class FigmaToCodeApp extends StatelessWidget {
 class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 390,
-          height: 857,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 32,
-                top: 28,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 305,
-                              height: 168,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage("assets/images/logo.png"),
-                                  fit: BoxFit.cover,
-                                ),
+    final size = MediaQuery.of(context).size;
+
+    return SingleChildScrollView(
+      child: Container(
+        width: size.width,
+        height: size.height,
+        decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 32,
+              top: 28,
+              child: Container(
+                width: size.width - 64, // Adjust width to fit within the screen
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: size.width - 64,
+                            height: 168,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/logo.png"),
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 43),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Log In',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 45,
-                                fontFamily: 'Raleway',
-                                fontWeight: FontWeight.w700,
-                                height: 0,
-                              ),
+                    ),
+                    const SizedBox(height: 43),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Log In',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 45,
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w700,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Positioned(
-                left: 12,
-                top: 439,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Email/No handphone',
+            ),
+            Positioned(
+              left: 12,
+              top: size.height * 0.5,
+              child: Container(
+                width: size.width - 24, // Adjust width to fit within the screen
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Email/No handphone',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 9),
+                    Container(
+                      width: size.width - 24,
+                      height: 33,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: size.width - 24,
+                              height: 33,
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 12,
+                            top: 6,
+                            child: Text(
+                              'apayadong@gmail.com',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Color(0xFF8B8B8B),
                                 fontSize: 18,
+                                fontStyle: FontStyle.italic,
                                 fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
+                                fontWeight: FontWeight.w300,
+                                decoration: TextDecoration.underline,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 9),
-                      Container(
-                        width: 365,
-                        height: 33,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: Container(
-                                width: 365,
-                                height: 33,
-                                decoration: ShapeDecoration(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              left: 12,
-                              top: 6,
-                              child: Text(
-                                'apayadong@gmail.com',
-                                style: TextStyle(
-                                  color: Color(0xFF8B8B8B),
-                                  fontSize: 18,
-                                  fontStyle: FontStyle.italic,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w300,
-                                  decoration: TextDecoration.underline,
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Positioned(
-                left: 102,
-                top: 646,
+            ),
+            Positioned(
+              left: 12,
+              top: size.height * 0.6,
+              child: Container(
+                width: size.width - 24, // Adjust width to fit within the screen
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Password',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    Container(
+                      width: size.width - 24,
+                      height: 33,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            top: 0,
+                            child: Container(
+                              width: size.width - 24,
+                              height: 33,
+                              decoration: ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 12,
+                            top: 6,
+                            child: Text(
+                              '********',
+                              style: TextStyle(
+                                color: Color(0xFF8B8B8B),
+                                fontSize: 18,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              left: size.width * 0.25,
+              top: size.height * 0.75,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/home');
+                },
                 child: Container(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -197,155 +270,58 @@ class LogInPage extends StatelessWidget {
                                 fontSize: 45,
                                 fontFamily: 'Raleway',
                                 fontWeight: FontWeight.w700,
-                                height: 0,
                               ),
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Don’t have an account? ',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 11,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Sign Up',
-                                    style: TextStyle(
-                                      color: Color(0xFF40A578),
-                                      fontSize: 11,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w600,
-                                      height: 0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 12,
-                top: 511,
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Password',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
-                                height: 0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        width: 365,
-                        height: 33,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                              left: 0,
-                              top: 0,
-                              child: Container(
-                                width: 365,
-                                height: 33,
-                                child: Stack(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/signup');
+                        },
+                        child: Container(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text.rich(
+                                TextSpan(
                                   children: [
-                                    Positioned(
-                                      left: 0,
-                                      top: 0,
-                                      child: Container(
-                                        width: 365,
-                                        height: 33,
-                                        decoration: ShapeDecoration(
-                                          color: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                        ),
+                                    TextSpan(
+                                      text: 'Don’t have an account? ',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 11,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                    Positioned(
-                                      left: 12,
-                                      top: 6,
-                                      child: Text(
-                                        '********',
-                                        style: TextStyle(
-                                          color: Color(0xFF8B8B8B),
-                                          fontSize: 18,
-                                          fontStyle: FontStyle.italic,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w300,
-                                          height: 0,
-                                        ),
+                                    TextSpan(
+                                      text: 'Sign Up',
+                                      style: TextStyle(
+                                        color: Color(0xFF40A578),
+                                        fontSize: 11,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              left: 335,
-                              top: 7,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                padding: const EdgeInsets.only(
-                                    top: 1.19, bottom: 1.17),
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
