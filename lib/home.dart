@@ -581,7 +581,7 @@ class HomePage extends StatelessWidget {
                               const SizedBox(width: 45),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, '/tanya_dokter');
+                                  Navigator.pushNamed(context, '/tanyadokter');
                                 },
                                 child: Container(
                                   child: Column(

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'custom_navigation_bar.dart'; // Sesuaikan dengan lokasi file CustomNavigationBar.dart Anda
-import 'home.dart'; // Sesuaikan dengan lokasi file home.dart Anda
-import 'notifikasi.dart'; // Sesuaikan dengan lokasi file notifikasi.dart Anda
-import 'profile.dart'; // Sesuaikan dengan lokasi file profile.dart Anda
+import 'package:mobile_app/booking_dokter.dart';
+import 'custom_navigation_bar.dart';
+import 'home.dart';
+import 'notifikasi.dart';
+import 'profile.dart';
 import 'booking.dart';
 import 'tanya_dokter.dart';
 import 'jadwal_dokter.dart';
-import 'login_page.dart'; // Tambahkan import ini
+import 'login_page.dart';
 import 'signup.dart';
 import 'invoice.dart';
+import 'add_tanya.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Custom Navigation Bar',
-      initialRoute: '/', // Set initial route to LogInPage
+      initialRoute: '/',
       routes: {
         '/': (context) => LogInPage(), // Tambahkan rute ini untuk halaman login
         '/home': (context) => HomePageWithNavigationBar(),
@@ -27,9 +29,18 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => ProfilePageWithNavigationBar(),
         '/booking': (context) => BookingPage(),
         '/tanya_dokter': (context) => TanyaPage(),
-        '/jadwal_dokter': (context) => JadwalPage(),
+        '/jadwal_dokter': (context) => JadwalDokter(),
         '/signup': (context) => SignUpPage(),
-        '/invoice': (context) => InvoicePage(),
+        '/bookingdokter': (context) => BookingDokter(),
+        '/tanyadokter': (context) => ForumPost(),
+      },
+      onGenerateRoute: (settings) {
+        if (settings.name == '/invoice') {
+          final bookingDetails = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(builder: (context) {
+            return InvoicePage(bookingDetails: bookingDetails);
+          });
+        }
       },
     );
   }

@@ -1,306 +1,195 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:mobile_app/booking_dokter.dart';
+import 'booking_dokter.dart';
 
 void main() {
-  runApp(const FigmaToCodeApp());
+  runApp(JadwalDokter());
 }
 
-class FigmaToCodeApp extends StatelessWidget {
-  const FigmaToCodeApp({super.key});
-
+class JadwalDokter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+      theme: ThemeData.light().copyWith(
+        scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
       ),
       home: Scaffold(
-        body: ListView(children: [
-          JadwalPage(),
-        ]),
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(100),
+            child: AppBar(
+              backgroundColor: const Color.fromRGBO(154, 212, 166, 1),
+              title: Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Text(
+                  'Jadwal Dokter',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              centerTitle: true,
+              leading: Padding(
+                padding: const EdgeInsets.only(left: 16.0, top: 30.0),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    } else {
+                      print('Error');
+                    }
+                  },
+                ),
+              ),
+            )),
+        body: JadwalPage(),
       ),
+      routes: {
+        '/bookingdokter': (context) => BookingDokter(),
+      },
     );
   }
 }
 
-class JadwalPage extends StatelessWidget {
+class Doctor {
+  final String name;
+  final String unit;
+  final String specialty;
+  final String schedule;
+
+  Doctor({
+    required this.name,
+    required this.unit,
+    required this.specialty,
+    required this.schedule,
+  });
+
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+      name: json['name'] ?? '',
+      unit: json['unit'] ?? '',
+      specialty: json['spesialis'] ?? '',
+      schedule: json['jadwal'] ?? '',
+    );
+  }
+}
+
+class JadwalPage extends StatefulWidget {
+  @override
+  _JadwalPageState createState() => _JadwalPageState();
+}
+
+class _JadwalPageState extends State<JadwalPage> {
+  late Future<List<Doctor>> _futureDoctors;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureDoctors = fetchDoctors();
+  }
+
+  Future<List<Doctor>> fetchDoctors() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:3001/profiles'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => Doctor.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load doctors');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(color: Color(0xFFF5F5F5)),
-            child: Column(
+    return FutureBuilder<List<Doctor>>(
+      future: _futureDoctors,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          final doctors = snapshot.data!;
+          return ListView(
+            children:
+                doctors.map((doctor) => DokterCard(doctor: doctor)).toList(),
+          );
+        }
+      },
+    );
+  }
+}
+
+class DokterCard extends StatelessWidget {
+  final Doctor doctor;
+
+  const DokterCard({required this.doctor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        color: Color.fromRGBO(154, 212, 166, 1),
+        elevation: 4,
+        child: Column(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.all(16),
+              title: Text(
+                doctor.name,
+                style:
+                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 8),
+                  Text(
+                    'Unit: ${doctor.unit}',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Specialty: ${doctor.specialty}',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'Schedule: ${doctor.schedule}',
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+            ButtonBar(
+              alignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.only(
-                    top: 42,
-                    left: 12,
-                    right: 90,
-                    bottom: 16,
-                  ),
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF9AD4A6),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/bookingdokter');
+                  },
+                  child: Text('Booking'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.white),
                     ),
                   ),
-                  child: Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/home');
-                        },
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/left_icon.png"),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 59),
-                      Expanded(
-                        child: Text(
-                          'Jadwal Dokter',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 25,
-                            fontFamily: 'Raleway',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    height: 56,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 31,
-                          height: 31,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage("assets/images/search_icon.png"),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          'cari dokter yang kamu mau',
-                          style: TextStyle(
-                            color: Color(0xFFBBBBBB),
-                            fontSize: 15,
-                            fontStyle: FontStyle.italic,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w200,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                doctorRow(
-                  context,
-                  "assets/images/stevanie.png",
-                  "Dr. Stevanie Mily",
-                  "Poli Umum",
-                  "Umum",
-                  "09:00 - 16:00, senin - jumat",
-                  "assets/images/william.png",
-                  "Dr. William Doh",
-                  "Bedah",
-                  "Bedah Plastik",
-                  "09:00 - 16:00, senin - kamis",
-                ),
-                const SizedBox(height: 20),
-                doctorRow(
-                  context,
-                  "assets/images/syifa.png",
-                  "Dr. Syifa Zahra",
-                  "Psikologi",
-                  "Psikolog",
-                  "10:00 - 17:00, selasa - jumat",
-                  "assets/images/bob.png",
-                  "Dr. Bob Julian",
-                  "Pediatric",
-                  "Anak",
-                  "08:00 - 15:00, senin - jumat",
-                ),
-                const SizedBox(height: 20),
-                doctorRow(
-                  context,
-                  "assets/images/emily.png",
-                  "Dr. Emily Latus",
-                  "Poli Saraf",
-                  "Saraf",
-                  "08:00 - 14:00, rabu - sabtu",
-                  "assets/images/julio.png",
-                  "Dr. Julio Mars",
-                  "Poli Bedah",
-                  "Bedah Umum",
-                  "09:00 - 16:00, senin - jumat",
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget doctorRow(
-    BuildContext context,
-    String imagePath1,
-    String name1,
-    String unit1,
-    String specialty1,
-    String schedule1,
-    String imagePath2,
-    String name2,
-    String unit2,
-    String specialty2,
-    String schedule2,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: doctorCard(
-                context, imagePath1, name1, unit1, specialty1, schedule1),
-          ),
-          const SizedBox(width: 28),
-          Expanded(
-            child: doctorCard(
-                context, imagePath2, name2, unit2, specialty2, schedule2),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget doctorCard(BuildContext context, String imagePath, String name,
-      String unit, String specialty, String schedule) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-      decoration: ShapeDecoration(
-        color: Color(0xFF9AD4A6),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          ],
         ),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 140,
-            height: 146,
-            decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            name,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 7),
-          Text(
-            'Unit : $unit',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 10,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Spesialis : $specialty',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 10,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            'Jadwal : $schedule',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 10,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-            decoration: ShapeDecoration(
-              color: Color(0xFF40A578),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-            ),
-            child: Text(
-              'Booking',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
